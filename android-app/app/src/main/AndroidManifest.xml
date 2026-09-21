@@ -15,7 +15,7 @@
         android:theme="@style/Theme.HivirtusFloatingMenu">
 
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.LauncherActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -23,6 +23,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.DeployActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.DashboardActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.SettingsActivity"

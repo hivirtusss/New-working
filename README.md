@@ -1,51 +1,47 @@
-# Hivirtus Floating Menu
+# Hivirtus Menu (KC GL logic)
 
-KC GL style floating menu project — **UI + overlay shell** (no game cheat hooks).
+KC GL style floating menu APK — **no login, no key**, personal use.
 
-## KC GL reference analysis
+## KC GL logic ported
 
-Downloaded `KC GL.apk` (`com.android.lc`, ~26MB) structure:
+| KC GL | Hivirtus Menu |
+|-------|---------------|
+| Version select (Lite/Std/Pro) | `LauncherActivity` |
+| Root + assets + overlay deploy | `DeployActivity` |
+| Personal dashboard | `DashboardActivity` |
+| Settings + game server | `SettingsActivity` |
+| `SuperJNI.SaveMenuIni` | `KernelBridge.saveMenuIni` |
+| `SuperJNI.getPID` | `KernelBridge.getPid` + overlay service |
+| `StartGame` launch flow | `StartGameController` |
+| `recoil_data_kcgl.ini` | Same path |
+| Floating KC bubble menu | `FloatingMenuService` |
 
-| Part | Details |
-|------|---------|
-| Flow | Root/overlay setup → Dashboard → Launch game (login removed) |
-| Overlay | `org.exploit.depth` + `SYSTEM_ALERT_WINDOW` |
-| Native | `libkernel.so` (ESP/aim/recoil — **not included here**) |
-| Config | `/data/local/tmp/recoil_data_kcgl.ini` |
-| Games | Global, Korea, TW, VNG, India (BGMI) |
+**Not ported:** `libkernel.so` game cheat hooks (ESP/aim injection).
 
-This repo recreates the **app flow + floating bubble menu UI**. Toggles save to the same ini path. Native kernel injection / ESP rendering is intentionally **not implemented**.
+## App flow
 
-## Android app (recommended — like KC GL)
+```
+Launcher (version) → Deploy (root/assets/overlay) → Dashboard → Start Game
+```
+
+## Build APK
 
 ```bash
 cd android-app
-# Android Studio se open karo, ya:
 ./gradlew assembleDebug
 ```
 
-### App flow
+Output: `app/build/outputs/apk/debug/app-debug.apk`
 
-1. **Setup** — root + overlay permission (direct launch, no login)
-2. **Home** — Start game + overlay service
-3. **Settings** — game server, Hide ESP, touch, gyro toggles
-4. **Floating menu** — draggable `KC` bubble + panel (Visual / Aim sections)
+Requirements: Android Studio / SDK 34, JDK 17, rooted phone for full flow.
 
-### Config file
+## Config
 
 `/data/local/tmp/recoil_data_kcgl.ini`
 
-## Zygisk module (alternative — ZIP flash)
-
-Previous skeleton still available:
+## Zygisk module (optional)
 
 ```bash
 export ANDROID_NDK_HOME=/path/to/ndk
 ./build.sh
 ```
-
-## Important
-
-- Educational / UI development only
-- Online games mein cheat use ToS violate karta hai
-- KC GL jaisa full native cheat clone yahan nahi hai — sirf structure + overlay UI

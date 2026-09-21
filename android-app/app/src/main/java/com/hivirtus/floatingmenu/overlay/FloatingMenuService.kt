@@ -17,14 +17,15 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import com.hivirtus.floatingmenu.R
+import com.hivirtus.floatingmenu.data.AppState
 import com.hivirtus.floatingmenu.data.MenuConfig
+import com.hivirtus.floatingmenu.util.FileHelper
 
 class FloatingMenuService : Service() {
     private lateinit var windowManager: WindowManager
     private var bubbleView: View? = null
     private var panelView: View? = null
     private var config = MenuConfig.load()
-
     private var bubbleParams: WindowManager.LayoutParams? = null
     private var panelParams: WindowManager.LayoutParams? = null
 
@@ -33,12 +34,16 @@ class FloatingMenuService : Service() {
     override fun onCreate() {
         super.onCreate()
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+        config.menuOpen = true
         startAsForeground()
         showBubble()
-        if (config.menuOpen) showPanel()
+        showPanel()
     }
 
     override fun onDestroy() {
+        config.menuOpen = false
+        config.save()
+        FileHelper.writeRootFile(config.toIniString(), MenuConfig.CONFIG_PATH)
         removeViews()
         super.onDestroy()
     }
@@ -47,8 +52,7 @@ class FloatingMenuService : Service() {
         val channelId = "floating_menu"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(channelId, "Floating Menu", NotificationManager.IMPORTANCE_LOW)
-            val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(channel)
+            getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
         }
         val notification: Notification = NotificationCompat.Builder(this, channelId)
             .setContentTitle(getString(R.string.app_name))
@@ -68,10 +72,9 @@ class FloatingMenuService : Service() {
 
     private fun showBubble() {
         if (bubbleView != null) return
-
-        val inflater = LayoutInflater.from(this)
-        val view = inflater.inflate(R.layout.overlay_bubble, null)
+        val view = LayoutInflater.from(this).inflate(R.layout.overlay_bubble, null)
         val bubble = view.findViewById<TextView>(R.id.bubbleButton)
+        bubble.text = "KC"
 
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -87,7 +90,7 @@ class FloatingMenuService : Service() {
         bubble.setOnClickListener {
             config.menuOpen = !config.menuOpen
             if (config.menuOpen) showPanel() else hidePanel()
-            config.save()
+            persist()
         }
 
         view.setOnTouchListener(DragTouchListener(params) {
@@ -98,7 +101,7 @@ class FloatingMenuService : Service() {
                 it.y = params.y + 120
                 panelView?.let { panel -> windowManager.updateViewLayout(panel, it) }
             }
-            config.save()
+            persist()
         })
 
         windowManager.addView(view, params)
@@ -111,10 +114,7 @@ class FloatingMenuService : Service() {
             panelView?.visibility = View.VISIBLE
             return
         }
-
-        val inflater = LayoutInflater.from(this)
-        val view = inflater.inflate(R.layout.overlay_menu_panel, null)
-
+        val view = LayoutInflater.from(this).inflate(R.layout.overlay_menu_panel, null)
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
@@ -130,7 +130,7 @@ class FloatingMenuService : Service() {
         view.findViewById<TextView>(R.id.closePanel).setOnClickListener {
             config.menuOpen = false
             hidePanel()
-            config.save()
+            persist()
         }
 
         windowManager.addView(view, params)
@@ -145,30 +145,40 @@ class FloatingMenuService : Service() {
     }
 
     private fun bindPanelToggles(root: View) {
-        val toggles = mapOf(
-            R.id.toggleEspBox to { checked: Boolean -> config.espBox = checked },
-            R.id.toggleEspLine to { checked: Boolean -> config.espLine = checked },
-            R.id.toggleEspDistance to { checked: Boolean -> config.espDistance = checked },
-            R.id.toggleAimAssist to { checked: Boolean -> config.aimAssist = checked },
-            R.id.toggleRecoil to { checked: Boolean -> config.recoilControl = checked },
-            R.id.toggleHideEsp to { checked: Boolean -> config.hideEsp = checked }
+        val map = mapOf(
+            R.id.toggle_esp_box to { v: Boolean ->
+                config.toggleEsp = v
+                AppState.enableVisual = v
+            },
+            R.id.toggle_esp_line to { v: Boolean -> config.espLine = v },
+            R.id.toggle_esp_distance to { v: Boolean -> config.espDistance = v },
+            R.id.toggle_aim_assist to { v: Boolean -> config.aimAssist = v },
+            R.id.toggle_recoil to { v: Boolean -> config.recoilControl = v },
+            R.id.toggle_hide_esp to { v: Boolean ->
+                config.hideEsp = v
+                AppState.hideEsp = v
+            }
         )
-
-        toggles.forEach { (id, apply) ->
+        map.forEach { (id, apply) ->
             val box = root.findViewById<CheckBox>(id)
             when (id) {
-                R.id.toggleEspBox -> box.isChecked = config.espBox
-                R.id.toggleEspLine -> box.isChecked = config.espLine
-                R.id.toggleEspDistance -> box.isChecked = config.espDistance
-                R.id.toggleAimAssist -> box.isChecked = config.aimAssist
-                R.id.toggleRecoil -> box.isChecked = config.recoilControl
-                R.id.toggleHideEsp -> box.isChecked = config.hideEsp
+                R.id.toggle_esp_box -> box.isChecked = config.toggleEsp
+                R.id.toggle_esp_line -> box.isChecked = config.espLine
+                R.id.toggle_esp_distance -> box.isChecked = config.espDistance
+                R.id.toggle_aim_assist -> box.isChecked = config.aimAssist
+                R.id.toggle_recoil -> box.isChecked = config.recoilControl
+                R.id.toggle_hide_esp -> box.isChecked = config.hideEsp
             }
             box.setOnCheckedChangeListener { _, checked ->
                 apply(checked)
-                config.save()
+                persist()
             }
         }
+    }
+
+    private fun persist() {
+        config.save()
+        FileHelper.writeRootFile(config.toIniString(), MenuConfig.CONFIG_PATH)
     }
 
     private fun removeViews() {
@@ -204,9 +214,7 @@ class FloatingMenuService : Service() {
                     (v.context.getSystemService(WINDOW_SERVICE) as WindowManager).updateViewLayout(v, params)
                     onMoved()
                 }
-                MotionEvent.ACTION_UP -> {
-                    if (dragging) return true
-                }
+                MotionEvent.ACTION_UP -> if (dragging) return true
             }
             return false
         }
