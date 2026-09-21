@@ -1,0 +1,20 @@
+# Build output
+build/
+dist/
+*.zip
+*.so
+*.o
+
+# NDK / deps (downloaded by build.sh)
+deps/
+.externalNativeBuild/
+.cxx/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
