@@ -8,7 +8,7 @@ Downloaded `KC GL.apk` (`com.android.lc`, ~26MB) structure:
 
 | Part | Details |
 |------|---------|
-| Flow | Login → Root/overlay setup → Dashboard → Launch game |
+| Flow | Root/overlay setup → Dashboard → Launch game (login removed) |
 | Overlay | `org.exploit.depth` + `SYSTEM_ALERT_WINDOW` |
 | Native | `libkernel.so` (ESP/aim/recoil — **not included here**) |
 | Config | `/data/local/tmp/recoil_data_kcgl.ini` |

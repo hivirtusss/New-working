@@ -10,6 +10,7 @@ import com.hivirtus.floatingmenu.data.GamePackages
 import com.hivirtus.floatingmenu.data.MenuConfig
 import com.hivirtus.floatingmenu.databinding.ActivityHomeBinding
 import com.hivirtus.floatingmenu.overlay.FloatingMenuService
+import com.hivirtus.floatingmenu.util.PermissionHelper
 import com.hivirtus.floatingmenu.util.RootUtils
 
 class HomeActivity : AppCompatActivity() {
@@ -21,8 +22,8 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val game = GamePackages.byId(config.gameServer)
-        binding.gameLabel.text = getString(R.string.selected_game, game?.label ?: "None")
+        PermissionHelper.ensureReady(this)
+        updateGameLabel()
 
         binding.startGame.setOnClickListener { startGameFlow() }
         binding.openSettings.setOnClickListener {
@@ -37,11 +38,20 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         config = MenuConfig.load()
+        updateGameLabel()
+    }
+
+    private fun updateGameLabel() {
         val game = GamePackages.byId(config.gameServer)
         binding.gameLabel.text = getString(R.string.selected_game, game?.label ?: "None")
     }
 
     private fun startGameFlow() {
+        if (!PermissionHelper.hasOverlay(this)) {
+            PermissionHelper.ensureReady(this)
+            return
+        }
+
         val game = GamePackages.byId(config.gameServer)
         if (game == null) {
             Toast.makeText(this, R.string.select_game_first, Toast.LENGTH_SHORT).show()

@@ -1,15 +1,5 @@
 <resources>
     <string name="app_name">Hivirtus Menu</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="show_password">Show password</string>
-    <string name="login">LOGIN</string>
-    <string name="register">Register</string>
-    <string name="activation">Activation</string>
-    <string name="server_line">Server Line</string>
-    <string name="login_empty">Enter username and password</string>
-    <string name="register_stub">Register flow not connected</string>
-    <string name="activation_stub">Activation flow not connected</string>
     <string name="setup_title">Setup checks</string>
     <string name="check_root">Check root</string>
     <string name="request_overlay">Grant overlay permission</string>
