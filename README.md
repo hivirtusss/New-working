@@ -26,11 +26,10 @@ cd android-app
 
 ### App flow
 
-1. **Login** — local username/password save
-2. **Setup** — root + overlay permission
-3. **Home** — Start game + overlay service
-4. **Settings** — game server, Hide ESP, touch, gyro toggles
-5. **Floating menu** — draggable `KC` bubble + panel (Visual / Aim sections)
+1. **Setup** — root + overlay permission (direct launch, no login)
+2. **Home** — Start game + overlay service
+3. **Settings** — game server, Hide ESP, touch, gyro toggles
+4. **Floating menu** — draggable `KC` bubble + panel (Visual / Aim sections)
 
 ### Config file
 
