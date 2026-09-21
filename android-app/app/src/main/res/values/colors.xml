@@ -1,0 +1,11 @@
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#777777</color>
+    <color name="accent">#00B4FF</color>
+    <color name="accent_light">#66D4FF</color>
+    <color name="panel_bg">#CC0A0A0A</color>
+    <color name="bubble_bg">#000000</color>
+    <color name="virtus_bg">#000000</color>
+    <color name="virtus_blue">#00B4FF</color>
+</resources>

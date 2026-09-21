@@ -1,0 +1,7 @@
+id=hivirtus_floating_menu
+name=Hivirtus Floating Menu
+version=v1.0.0
+versionCode=1
+author=@hivirtus
+description=Zygisk floating menu mod — ZIP flash only, no APK. Local config.
+zygisk=1

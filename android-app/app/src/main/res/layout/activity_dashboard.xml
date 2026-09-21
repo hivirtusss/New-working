@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@drawable/virtus_logo" />
+
+        <TextView
+            android:id="@+id/version_badge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/game_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/core_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/gray" />
+
+        <LinearLayout
+            android:id="@+id/start_game_card"
+            android:layout_width="180dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_primary_button"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="▶"
+                android:textColor="@color/white"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/start_game_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/start_cheat"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/device_info"
+            android:textStyle="bold" />
+
+        <TextView android:id="@+id/phone_model" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" />
+        <TextView android:id="@+id/screen_size" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <TextView android:id="@+id/android_version" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <TextView android:id="@+id/kernel_version" android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/settings_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:text="@string/open_settings"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/visual_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:text="@string/enable_visual_off"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/driver_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_card"
+            android:padding="14dp"
+            android:text="@string/load_driver"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/stop_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/stop_overlay" />
+    </LinearLayout>
+</ScrollView>
