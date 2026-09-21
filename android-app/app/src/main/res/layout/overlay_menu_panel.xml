@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="260dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_menu_panel"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/menu_title"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/closePanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="X"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/visual_section" android:textColor="@color/accent_light" />
+    <CheckBox android:id="@+id/toggle_esp_box" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/esp_box" android:textColor="@color/white" />
+    <CheckBox android:id="@+id/toggle_esp_line" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/esp_line" android:textColor="@color/white" />
+    <CheckBox android:id="@+id/toggle_esp_distance" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/esp_distance" android:textColor="@color/white" />
+    <CheckBox android:id="@+id/toggle_hide_esp" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/hide_esp" android:textColor="@color/white" />
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/aim_section" android:textColor="@color/accent_light" />
+    <CheckBox android:id="@+id/toggle_aim_assist" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/aim_assist" android:textColor="@color/white" />
+    <CheckBox android:id="@+id/toggle_recoil" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/recoil_control" android:textColor="@color/white" />
+</LinearLayout>

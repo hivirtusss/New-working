@@ -1,71 +1,52 @@
 # Hivirtus Floating Menu
 
-Zygisk floating menu mod — **sirf ZIP flash**, koi alag APK install nahi.
+KC GL style floating menu project — **UI + overlay shell** (no game cheat hooks).
 
-## Features
+## KC GL reference analysis
 
-- Floating **HM** button game ke upar (ImGui overlay)
-- Tap se menu open/close
-- Draggable position
-- Local config file (no server)
-- Target: BGMI (`com.pubg.imobile`) aur PUBG Global (`com.tencent.ig`)
+Downloaded `KC GL.apk` (`com.android.lc`, ~26MB) structure:
 
-## Requirements
+| Part | Details |
+|------|---------|
+| Flow | Login → Root/overlay setup → Dashboard → Launch game |
+| Overlay | `org.exploit.depth` + `SYSTEM_ALERT_WINDOW` |
+| Native | `libkernel.so` (ESP/aim/recoil — **not included here**) |
+| Config | `/data/local/tmp/recoil_data_kcgl.ini` |
+| Games | Global, Korea, TW, VNG, India (BGMI) |
 
-- Rooted device with **Magisk** (Zygisk ON) ya **KernelSU** + Zygisk
-- Android arm64
-- Android NDK (build ke liye)
+This repo recreates the **app flow + floating bubble menu UI**. Toggles save to the same ini path. Native kernel injection / ESP rendering is intentionally **not implemented**.
 
-## Build
+## Android app (recommended — like KC GL)
+
+```bash
+cd android-app
+# Android Studio se open karo, ya:
+./gradlew assembleDebug
+```
+
+### App flow
+
+1. **Login** — local username/password save
+2. **Setup** — root + overlay permission
+3. **Home** — Start game + overlay service
+4. **Settings** — game server, Hide ESP, touch, gyro toggles
+5. **Floating menu** — draggable `KC` bubble + panel (Visual / Aim sections)
+
+### Config file
+
+`/data/local/tmp/recoil_data_kcgl.ini`
+
+## Zygisk module (alternative — ZIP flash)
+
+Previous skeleton still available:
 
 ```bash
 export ANDROID_NDK_HOME=/path/to/ndk
-chmod +x build.sh
 ./build.sh
 ```
 
-Output: `HivirtusFloatingMenu-v1.0.0.zip`
+## Important
 
-## Install
-
-1. ZIP ko Magisk / KernelSU se flash karo
-2. Reboot
-3. Game open karo — top-left area mein **HM** button dikhega
-
-## Config (local)
-
-File: `/data/local/tmp/hivirtus_menu.conf`
-
-```ini
-menu_x=100
-menu_y=200
-menu_open=0
-toggle_esp=0
-toggle_aim=0
-```
-
-Values edit karke game restart karo, ya menu se toggle karo (auto-save next version).
-
-## Project structure
-
-```
-module/          Magisk flashable files
-native/          Zygisk C++ module (ImGui + EGL hook)
-build.sh         NDK build + ZIP pack
-```
-
-## Target package change
-
-`native/main.cpp` mein `TARGET_PACKAGES` array edit karo.
-
-## Notes
-
-- Yeh v1 skeleton hai — ESP/Aim toggles abhi placeholder hain
-- Touch input game engine pe depend karta hai; agar button respond na kare to input hook add karna padega
-- Sirf educational / apne device testing ke liye — online games mein use ToS violate kar sakta hai
-
-## Rules (confirmed)
-
-- Sirf **ZIP flash** — koi alag APK install nahi
-- **Floating window** module ke andar se
-- Local config only
+- Educational / UI development only
+- Online games mein cheat use ToS violate karta hai
+- KC GL jaisa full native cheat clone yahan nahi hai — sirf structure + overlay UI

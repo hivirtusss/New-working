@@ -1,6 +1,11 @@
+# Reference analysis (downloaded APK / decompile)
+reference/
+
 # Build output
 build/
 dist/
+android-app/.gradle/
+android-app/**/build/
 *.zip
 *.so
 *.o
