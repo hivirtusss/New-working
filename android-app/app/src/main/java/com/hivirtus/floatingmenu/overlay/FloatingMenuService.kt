@@ -14,6 +14,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import com.hivirtus.floatingmenu.R
@@ -57,7 +58,7 @@ class FloatingMenuService : Service() {
         val notification: Notification = NotificationCompat.Builder(this, channelId)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.overlay_running))
-            .setSmallIcon(R.drawable.ic_menu_bubble)
+            .setSmallIcon(R.drawable.virtus_bubble)
             .build()
         startForeground(101, notification)
     }
@@ -73,8 +74,7 @@ class FloatingMenuService : Service() {
     private fun showBubble() {
         if (bubbleView != null) return
         val view = LayoutInflater.from(this).inflate(R.layout.overlay_bubble, null)
-        val bubble = view.findViewById<TextView>(R.id.bubbleButton)
-        bubble.text = "KC"
+        val bubble = view.findViewById<ImageView>(R.id.bubbleButton)
 
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,

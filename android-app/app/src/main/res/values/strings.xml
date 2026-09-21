@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Hivirtus Menu</string>
+    <string name="app_name">Virtus SMS Module</string>
     <string name="select_version">Select Version</string>
     <string name="click_to_start">Tap a version then continue</string>
     <string name="version_lite">Lite</string>
     <string name="version_lite_desc">Basic floating menu</string>
     <string name="version_standard">Standard</string>
-    <string name="version_standard_desc">KC GL style features</string>
+    <string name="version_standard_desc">Virtus standard module</string>
     <string name="version_pro">Professional</string>
     <string name="version_pro_desc">Full visual options</string>
     <string name="continue_text">Continue</string>
@@ -52,7 +52,7 @@
     <string name="config_uploaded">Config written to device</string>
     <string name="config_loaded">Config loaded</string>
     <string name="core_deleted">Core file deleted</string>
-    <string name="menu_title">KC Style Menu</string>
+    <string name="menu_title">Virtus SMS Menu</string>
     <string name="visual_section">Visual</string>
     <string name="aim_section">Aim</string>
     <string name="esp_box">ESP Box</string>

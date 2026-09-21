@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "HivirtusFloatingMenu"
+rootProject.name = "VirtusSmsModule"
 include(":app")
